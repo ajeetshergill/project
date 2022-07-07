@@ -1,2 +1,0 @@
-function showErrMsg(s,i,r){s&&i?(i.innerHTML=r,s.classList.remove("opacity-0"),s.classList.add("opacity-100"),setTimeout(hideErrMsg,1e3,s)):console.error("Invalid Arguments - showErrMsg()")}function hideErrMsg(s){s?(s.classList.add("opacity-0"),s.classList.remove("opacity-100")):console.error("hideErrMsg:Invalid Arguments")}function disableButton(s){s.classList.add("disable-btn")}
-//# sourceMappingURL=index.4c8f1ebb.js.map
