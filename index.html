@@ -72,7 +72,32 @@
         content: "10%";
         top: .7rem
       }
+
+      #bnb-amount-span {
+        position: absolute;
+        right: 0;
+        border-radius: 0px 50px 50px 0px;
+        background: #627597;
+        color: white;
+        padding: .38rem;
+        width: 20%;
+        text-align: center;
+        top: 0px;
+      }
+
+      #ibat-amount-span {
+        position: absolute;
+        right: 0;
+        border-radius: 0px 50px 50px 0px;
+        background: #627597;
+        color: white;
+        padding: .38rem;
+        width: 20%;
+        text-align: center;
+        top: 0px;
+      }
     </style>
+
   </head>
 
   <body>
@@ -423,6 +448,29 @@
     <script async src="index.5936be97.js"></script>
     <script async src="index.5b6e5339.js"></script>
     <script async src="index.e41f6f40.js"></script>
+    <script>
+      // originally to be used in utils.js but for now its a quick patch
+      const IBAT_PER_BNB = +156250;
+      const ibatAmount = document.querySelector('#ibat-amount');
+      const BNBAmount = document.querySelector('#bnb-amount');
+      BNBAmount.onkeyup = populateIBATAmount;
+      ibatAmount.onkeyup = populateBNBAmount;
+
+      function populateIBATAmount() {
+        ibatAmount.value = calculateIBATAmount(BNBAmount.value)
+      }
+      function calculateIBATAmount(BNBAmount) {
+        return +(BNBAmount * IBAT_PER_BNB);
+      }
+
+
+      function populateBNBAmount() {
+        BNBAmount.value = calculateBNBAmount(ibatAmount.value)
+      }
+      function calculateBNBAmount(IBATAmount) {
+        return +(IBATAmount / IBAT_PER_BNB);
+      }
+    </script>
   </body>
 
 </html>
