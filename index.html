@@ -235,8 +235,17 @@
               <img src="ibat-img.23acb9f7.png" alt="" class="mb-4 relative top-4 w-[20%]">
               Buy Ibat
             </h3>
-            <input type="text" placeholder="Amount (IBAT)" class="buy-amount" id="bnb-amount">
-            <input type="text" placeholder="Total (BNB)" class="buy-amount" id="ibat-amount">
+            <!-- <input type="text" placeholder="Amount (IBAT)" class="buy-amount" id="bnb-amount">
+            <input type="text" placeholder="Total (BNB)" class="buy-amount" id="ibat-amount"> -->
+            <div class="relative">
+              <input type="text" placeholder="Amount (IBAT)" class="buy-amount" id="ibat-amount">
+              <span id="ibat-amount-span">IBAT</span>
+            </div>
+            <div class="relative">
+              <input type="text" placeholder="Total (BNB)" class="buy-amount" id="bnb-amount">
+              <span id="bnb-amount-span">BNB</span>
+            </div>
+
             <button href="#" id="buy_btn" class="btn buy-ibat-btn">Buy IBAT</button>
             <div id="buy-token-error-con"
               class="!mb-2 !p-2 !text-2xs alert alert-warning bg-red-300 duration-300 opacity-0 pointer-events-none text-slate-900 transition-all">
