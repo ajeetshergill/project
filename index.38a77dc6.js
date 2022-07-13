@@ -144,7 +144,7 @@ async function login(e) {
         if ((console.log(`Provider :${e} -ln-108`), "walletconnect" === e))
             try {
                 console.info("Authenticating with WalletConnect3"),
-                    (t = await Moralis.authenticate({ provider: "walletconnect" })),
+                    (t = await Moralis.authenticate({ provider: "walletconnect", signingMessage: "Battle Infinity Authentication Walletconnect" })),
                     console.info(`Enabling Web3 - ${e} ln-128`);
             } catch (e) {
                 console.error("Authentication Failed - Walletconnect - ln-118"),
@@ -384,10 +384,10 @@ async function buyToken() {
             console.log("Transaction finished"),
             console.log("Transaction"),
             console.log(o);
-        const n = await o.wait(18);
+        const n = await o.wait(5);
         console.log("Result"), console.log(n.transactionHash);
         console.log(n);
-        alert(`Transaction Successful. Please Import token and check your wallet.`)
+        alert(`✅Transaction Successful✅\nPlease Import token and check your wallet.`)
         let s = calculateIBATAmount(e);
         n && swapSuccessfulDataLayer(t, n.transactionHash, e, s),
             console.log(
