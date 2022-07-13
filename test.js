@@ -1,9 +1,15 @@
 window.onload = async function () {
-    populateAmountRaisedinHTMLDB();
-    await Moralis.enableWeb3(),
-        isUserConnected() &&
-        (console.log("Page-refreshed - User already connected"), login()),
-        console.log("Page-refreshed - User not connected");
+    populateAmountRaisedinHTMLDB(),
+        (await isWeb3Installed()) &&
+        ((WEB3_INSTALLED = !0),
+            console.log("dev:onload"),
+            console.log(
+                "dev: web3 installed  - checking if user is connected upon refreshing"
+            ),
+            await Moralis.enableWeb3(),
+            isUserConnected() &&
+            (console.log("dev: Page-refreshed - User already connected"), login()),
+            console.log("dev: Page-refreshed - User not connected"));
 };
 const TEST_ENVIRONMENT = !1;
 let web3Instance = "";
@@ -12,8 +18,9 @@ const REFER_CONTRACT_ADDRESS_TESTNET =
     REFER_CONTRACT_ADDRESS_MAINNET = "0x5832E385f633b30519B3ECaDE3C5eD3d9881cf58",
     DEPLOYED_CONTRACT_ADDRESS = REFER_CONTRACT_ADDRESS_MAINNET;
 console.log(`Deployed Presale Contract is ${DEPLOYED_CONTRACT_ADDRESS}`);
-const CONFIRMATIONS_ON_BSC = 18,
-    serverUrl_Testnet = "https://gusm6vrpbwtk.usemoralis.com:2053/server",
+const CONFIRMATIONS_ON_BSC = 11;
+let WEB3_INSTALLED = !1;
+const serverUrl_Testnet = "https://gusm6vrpbwtk.usemoralis.com:2053/server",
     appId_Testnet = "glRYjrZo9XjLE2MPc7sWgzc4PyoFs3RbmyoNiPbf";
 let currentChainIdHex,
     serverUrl = "https://gb6gwydcjjw6.usemoralis.com:2053/server",
@@ -30,11 +37,11 @@ const walletOptions = document.getElementById("wallet-options"),
     buyBtn = document.getElementById("buy_btn"),
     showTokenBtn = document.getElementById("web3-tokens"),
     BscChainIdMain = 56,
-    BscChainIdTest = 97,
+    BscChainIdTest = "0x61",
     showAddress = document.getElementById("web3-wallet-address");
 let web3 = new Web3(Moralis.provider || Web3.givenProvider);
 const NODE_URL_TESTNET =
-    "https://speedy-nodes-nyc.moralis.io/d633c685eb50e4bb5f7bdcf8/bsc/testnet",
+    "https://speedy-nodes-nyc.moralis.io/7569a2c3fc822716349963c8/bsc/testnet",
     NODE_URL_MAINNET =
         "https://speedy-nodes-nyc.moralis.io/7569a2c3fc822716349963c8/bsc/mainnet";
 let provider = "";
@@ -123,7 +130,7 @@ async function addNetwork(e) {
         console.log(`${t}-${o}-${n}-${s}`),
         await Moralis.addNetwork(t, o, "BNB", "BNB", n, s);
 }
-async function switchAndAdd(e = 97) {
+async function switchAndAdd(e = "0x61") {
     console.log("switchAndAdd - toChainid"), console.log(e);
     try {
         await switchNetwork(e);
@@ -131,23 +138,26 @@ async function switchAndAdd(e = 97) {
         await addNetwork(e);
     }
 }
-async function switchNetwork(e = 97) {
+async function switchNetwork(e = "0x61") {
     currentChainIdHex = await Moralis.switchNetwork(e);
 }
 async function login(e) {
     let t = Moralis.User.current();
-    if (
-        ("walletconnect" === e &&
-            (await Moralis.enableWeb3({ provider: "walletconnect" })),
-            !t)
-    )
-        if ((console.log(`Provider :${e} -ln-108`), "walletconnect" === e))
+    if (!t)
+        if (
+            (console.log(`Provider :${e} - login(provider)`), "walletconnect" === e)
+        )
             try {
-                console.info("Authenticating with WalletConnect3"),
-                    (t = await Moralis.authenticate({ provider: "walletconnect" })),
-                    console.info(`Enabling Web3 - ${e} ln-128`);
+                console.info("Authenticating with WalletConnect - chain -56"),
+                    (t = await Moralis.authenticate({
+                        provider: "walletconnect",
+                        chainId: 56,
+                        signingMessage: "Battle Infinity Authentication: WalletConnect",
+                    })),
+                    await Moralis.enableWeb3({ provider: "walletconnect" }),
+                    console.info(`dev:Enabling Web3 - ${e} ln-128`);
             } catch (e) {
-                console.error("Authentication Failed - Walletconnect - ln-118"),
+                console.error("dev:Authentication Failed - Walletconnect"),
                     console.error(e);
             }
         else
@@ -188,6 +198,11 @@ function isUserConnected() {
     return !!Moralis.User.current();
 }
 async function logOut() {
+    try {
+        await updateBNBRaised();
+    } catch (e) {
+        console.error("dev:failed - updateBNBRaised - logOut()");
+    }
     await Moralis.User.logOut(), console.log("logged out"), await atLogout();
 }
 async function atLogout() {
@@ -216,11 +231,6 @@ async function atLogout() {
         populateUsersInvestments("0");
     } catch (e) {
         console.error("failed - populateUsersInvestments");
-    }
-    try {
-        updateBNBRaised();
-    } catch (e) {
-        console.error("failed - updateBNBRaised - logout");
     }
     manageTooltipWidth(), toggleConnectStatus();
     const e = document.querySelector("#second-login-btn");
@@ -251,15 +261,15 @@ async function getBalance(e, t) {
         chain: e || currentChainIdHex || "0x38",
         address: t || n || "0x9d51fd1a308c073f2f06a7181ad90c6d6ab5e9d7",
     },
-        r = await Moralis.Web3API.account.getNativeBalance(s);
+        a = await Moralis.Web3API.account.getNativeBalance(s);
     o &&
         (o.innerHTML = `<li class="pr-2 flex justify-between w-full md:w-1/2 mx-auto mt-2"><span class="w-1/2 text-center">${HEX_TO_CHAIN_DETAILS[currentChainIdHex].nativeToken
             }</span><span class="w-1/2 text-left">${web3.utils.fromWei(
-                r.balance
+                a.balance
             )}</span></li>`);
-    const a = await Moralis.Web3API.account.getTokenBalances(s);
-    a.length
-        ? a.forEach((e) => {
+    const r = await Moralis.Web3API.account.getTokenBalances(s);
+    r.length
+        ? r.forEach((e) => {
             if ("USDC" == e.symbol || "BUSD" == e.symbol || "IBAT" == e.symbol) {
                 const t = convertTokenBalance(e.balance, e.decimals);
                 o
@@ -351,10 +361,6 @@ async function buyToken() {
             (n = "Presale has not yet started !!!"),
             void showErrMsg(t, o, n)
         );
-    // if (+e < 0.1)
-    //     return (
-    //         (n = "Minimum BNB Amount should be 0.1BNB"), void showErrMsg(t, o, n)
-    //     );
     if (
         "0xC8179e6927b61A4FdC3e5a2dB14e641E51b9ad83" !== getUserWalletAddress() &&
         +e < 0.1
@@ -362,7 +368,7 @@ async function buyToken() {
         return (
             (n = "Minimum BNB Amount should be 0.1BNB"), void showErrMsg(t, o, n)
         );
-    let r = {
+    let a = {
         contractAddress: DEPLOYED_CONTRACT_ADDRESS,
         functionName: "buyToken",
         abi: [
@@ -379,33 +385,33 @@ async function buyToken() {
     try {
         let t = getUserWalletAddress();
         console.log("Transaction started"), swapAmountDataLayer(t);
-        const o = await Moralis.executeFunction(r);
+        const o = await Moralis.executeFunction(a);
         confirmTransactionDataLayer(t),
             console.log("Transaction finished"),
             console.log("Transaction"),
             console.log(o);
-        const n = await o.wait(18);
+        const n = await o.wait(11);
         console.log("Result"), console.log(n.transactionHash);
-        console.log(n);
-        alert(`Transaction Successful. Please Import token and check your wallet.`)
         let s = calculateIBATAmount(e);
         n && swapSuccessfulDataLayer(t, n.transactionHash, e, s),
             console.log(
                 `Add: ${t} \n tID: ${n.transactionHash} \n BNB: ${e} \nIBAT: ${s}`
             );
     } catch (e) {
-        if (
-            (console.log("Transaction cancelled"),
+        console.log("Transaction cancelled");
+        try {
+            if (
                 e.message &&
                 (console.log(e.message),
                     (n = e.message),
-                    n.includes("User denied transaction signature")))
-        )
-            return (n = "Transaction declined by User"), void showErrMsg(t, o, n);
-        (n = e.data.message),
-            console.log(n),
-            (n = "Insufficient BNB in wallet"),
-            showErrMsg(t, o, n);
+                    n.includes("User denied transaction signature"))
+            )
+                return (n = "Transaction declined by User"), void showErrMsg(t, o, n);
+            n = e.data.message;
+        } catch (e) {
+            console.error("dev:bad error in BuyToken");
+        }
+        console.log(n), (n = "Insufficient BNB in wallet"), showErrMsg(t, o, n);
     }
 }
 async function getTotalBNBAmount() {
@@ -469,6 +475,15 @@ function toggleErrMsg() {
     const e = document.getElementById("buy-token-error-input");
     e.checked = !e.checked;
 }
+async function isWeb3Installed() {
+    const e = window.ethereum;
+    let t = !0;
+    return (
+        (e && e.on) ||
+        (console.log("dev:isWeb3Installed - Metamask not installed"), (t = !1)),
+        t
+    );
+}
 buyBtn
     ? (buyBtn.onclick = buyToken)
     : console.error("Login button missing in UI"),
@@ -483,4 +498,4 @@ const HEX_TO_CHAIN_DETAILS = {
     "0x61": { chain: "tBSC", nativeToken: "tBNB" },
     "0x38": { chain: "BSC", nativeToken: "BNB" },
 };
-//# sourceMappingURL=index.38a77dc6.js.map
+//# sourceMappingURL=index.3325dc19.js.map
