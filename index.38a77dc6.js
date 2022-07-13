@@ -356,7 +356,7 @@ async function buyToken() {
     //         (n = "Minimum BNB Amount should be 0.1BNB"), void showErrMsg(t, o, n)
     //     );
     if (
-        "0xC8179e6927b61A4FdC3e5a2dB14e641E51b9ad83" !== getUserWalletAddress() &&
+        "0xc8179e6927b61a4fdc3e5a2db14e641e51b9ad83" !== getUserWalletAddress() &&
         +e < 0.1
     )
         return (
