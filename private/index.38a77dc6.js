@@ -351,10 +351,10 @@ async function buyToken() {
             (n = "Presale has not yet started !!!"),
             void showErrMsg(t, o, n)
         );
-    // if (+e < 0.1)
-    //     return (
-    //         (n = "Minimum BNB Amount should be 0.1BNB"), void showErrMsg(t, o, n)
-    //     );
+    if (+e > 20)
+        return (
+            (n = "Maximum BNB Amount should be 20BNB"), void showErrMsg(t, o, n)
+        );
     if (
         "0xc8179e6927b61a4fdc3e5a2db14e641e51b9ad83" !== getUserWalletAddress() &&
         +e < 0.1
