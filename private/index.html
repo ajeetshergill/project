@@ -160,6 +160,7 @@ $refer_id = !empty($_GET['refercode']) ? $_GET['refercode'] : "";
                 style="display:none;visibility:hidden"></iframe> </noscript>
         <div class="main-bg-con">
             <div class="container-con">
+
                 <div class="header-section main-width relative">
                     <div class="logo"> <a href="https://battleinfinity.io/"> <img src="logo.baf9f9af.png"> </a> </div>
                     <div class="header-right-buttons">
@@ -181,12 +182,23 @@ $refer_id = !empty($_GET['refercode']) ? $_GET['refercode'] : "";
                         <h1> <span>Enter the</span> Multiverse of Metaverse </h1>
                         <p>Battle Infinity is a gaming platform made up of multiple P2E (Play-to-earn) battle games. All
                             games are integrated with our Metaverse world, the IBAT Battle Arena.</p>
+
+
                         <p>In Battle Infinity gamers don't only play and battle but can also enjoy and experience the
                             immersive world of the Metaverse – in which users can interact with each other, perform,
-                            watch and explore the Battle Arena virtual space.</p> <a target="_blank"
-                            href="https://t.me/battleinfinity"
-                            class="bg-[#0089c1] btn btn-outline gap-2 hover:text-white mb-10 md:w-fit text-white w-full">
-                            <img src="telegram.44894171.svg" class="w-7" alt=""> Join our telegram</a>
+                            watch and explore the Battle Arena virtual space.</p>
+                        <div class="flex gap-4 flex-col md:flex-row">
+                            <a target="_blank" href="https://t.me/battleinfinity"
+                                class="bg-[#0089c1] btn btn-outline gap-2 hover:text-white md:w-fit text-white w-full">
+                                <img src="telegram.44894171.svg" class="w-7" alt=""> Join our telegram</a>
+
+                            <label for="howto" id=""
+                                class="bg-[#0089c1] btn btn-outline gap-2 hover:text-white mb-10 md:w-fit text-white w-full cursor-pointer uppercase  h-8  px-1 md:px-6 flex justify-center items-center md:w-fit">
+                                <img src="info.svg" alt="" style="width: 1.25rem; "> <span class="">How
+                                    to</span>
+                            </label>
+                        </div>
+
                         <div class="flex flex-col gap-2 mb-4 md:flex-row">
                             <p
                                 class="!bg-slate-300 !font-semibold !px-3 !py-1 !rounded-md !text-[#011145] !text-2xs text-[#11145] w-max">
@@ -386,12 +398,36 @@ $refer_id = !empty($_GET['refercode']) ? $_GET['refercode'] : "";
                     <div class="copyright main-width">Copyright © 2022 - All right reserved by BATTLE INFINITY</div>
                 </div>
             </div>
+
+            <input type="checkbox" id="howto" class="modal-toggle">
+            <div class="modal">
+                <div class="modal-box pr-8  bg-[#fefefe] flex flex-col gap-2">
+                    <a style="background-color: #CBD5E1;" class="w-full p-4 py-3 rounded-md inline-block"
+                        href="https://battleinfinity.io/how-to-buy-ibat-token/" target="_blank">How to Buy IBAT
+                        token?</a>
+                    <a style="background-color: #CBD5E1;" class="w-full p-4 py-3 rounded-md inline-block"
+                        href="https://battleinfinity.io/battle-infinitys-beginners-guide-on-setting-up-trust-wallet/"
+                        target="_blank">Battle Infinity’s Beginner’s Guide on Setting Up Trust Wallet</a>
+                    <a style="background-color: #CBD5E1;" class="w-full p-4 py-3 rounded-md inline-block"
+                        href="https://battleinfinity.io/battle-infinitys-beginners-guide-to-metamask-wallet-configuration/"
+                        target="_blank">Battle Infinity’s Beginner’s Guide to MetaMask Wallet Configuration</a>
+                    <a style="background-color: #CBD5E1;" class="w-full p-4 py-3 rounded-md inline-block"
+                        href="https://battleinfinity.io/how-to-buy-bnb-on-binance-step-by-step/" target="_blank">How to
+                        Buy BNB on Binance (step-by-step)
+                    </a>
+
+                    <div class="modal-action">
+                        <label for="howto" class="btn btn-outline w-full text-slate-800">Close</label>
+                    </div>
+                </div>
+            </div>
+
         </div> <input type="checkbox" id="wallets" class="modal-toggle">
         <div class="modal">
             <div class="bg-[#fefefe] md:mb-0 modal-box pr-8">
                 <p>Select your wallet</p>
                 <div class="flex-col gap-1 modal-action"> <label for="wallets" id="web3-login-mm"
-                        class="btn btn-primary ml-2 pr-2">Metamask</label>
+                        class="btn btn-primary ml-2 pr-2">Metamask | TrustWallet</label>
                     <label for="wallets" id="web3-login-wc" onclick="login('walletconnect')"
                         class="btn btn-primary">WalletConnect</label>
                     <label for="wallets" class="btn btn-outline mt-4 text-slate-800">Close</label>
