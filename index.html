@@ -528,23 +528,14 @@ $refer_id = !empty($_GET['refercode']) ? $_GET['refercode'] : "";
                             (document.getElementById("demo").innerHTML = "EXPIRED"));
                 }, 1e3);
             function myFunction() {
-                var n = document.getElementById("myInput");
-                // navigator.clipboard.writeText(n.value).then(
-                //   function () {
-                //     document.getElementById("myTooltip").innerHTML =
-                //       "Link copied to clipboard";
-                //   },
-                //   function () {
-                //     alert("failed");
-                //   }
-                // );
+                let n = document.getElementById("myInput");
                 navigator.clipboard.writeText(n.value).then(
                     () => {
                         document.getElementById("myTooltip").innerHTML =
                             "Link copied to clipboard";
                     }).catch((e) => {
                         document.getElementById("myTooltip").innerHTML =
-                            "Something went wrong";
+                            "Something went wrong, copy manually";
                         alert(e);
                     });
             }
@@ -564,7 +555,9 @@ $refer_id = !empty($_GET['refercode']) ? $_GET['refercode'] : "";
         <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
         <script src="index.4e9e47a6.js"></script>
         <p class="hidden" style="display: none">
-            version:10.2 with progress bar and alert after transaction confirmation
+            version:10.2
+            - progress bar and
+            - alert after transaction confirmation
             v10.3
             1. Solidproof logo change
             2. How to buy
@@ -572,7 +565,7 @@ $refer_id = !empty($_GET['refercode']) ? $_GET['refercode'] : "";
             4. Input box - reffere not added
             5. Refreshuserinvestments after transaction confirmation (after alert)
             6. Loader
-            7. fixed copy function
+            7. rewrote
             8. Increase refresh icon size
         </p>
     </body>
