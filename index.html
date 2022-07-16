@@ -542,9 +542,10 @@ $refer_id = !empty($_GET['refercode']) ? $_GET['refercode'] : "";
                     () => {
                         document.getElementById("myTooltip").innerHTML =
                             "Link copied to clipboard";
-                    }).catch(() => {
+                    }).catch((e) => {
                         document.getElementById("myTooltip").innerHTML =
                             "Something went wrong";
+                        alert(e);
                     });
             }
             function outFunc() {
