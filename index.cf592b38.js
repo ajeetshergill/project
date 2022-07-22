@@ -1,0 +1,2 @@
+const notify=(s,o=3e3,t="",n={background:"#041115",border:"2px solid white"},c)=>{const e=Toastify({text:s,className:"Toastify__toast--success",duration:o,destination:t,newWindow:!0,avatar:"success.ae358123.svg",close:!0,gravity:"top",position:"right",stopOnFocus:!0,style:".toast__sucess",onClick:c});return function(){e.showToast()}};function toastSuccess(s,o=3e3){console.log(o),notify(s,o)()}
+//# sourceMappingURL=index.cf592b38.js.map
